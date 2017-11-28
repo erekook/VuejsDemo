@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vuejs</title>
+	<script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+	<div id="app">
+		{{ message }}
+		<span v-once>这个将不会改变：{{ msg }}</span>
+	</div>
+
+	<!-- v-bind 属性被称为指令。指令带有前缀 v-，以表示它们是 Vue 提供的特殊属性 -->
+	<div id="app-2">
+		<span v-bind:title="message">
+			鼠标悬停几秒钟查看此处动态绑定的提示信息！
+		</span><br>
+		<span :title="msg">鼠标悬停提示(v-bind的缩写)</span><br>
+		<a v-bind:href="url">baidu</a>
+	</div>
+
+	<!-- 条件与循环 -->
+	<div id="app-3">
+		<p v-if="seen">现在你看到我了</p>
+	</div>
+
+	<div id="app-4">
+		<ol>
+			<li v-for="todo in todos">
+				{{ todo.text }}
+			</li>
+		</ol>
+	</div>
+
+	<!-- v-on 指令绑定一个事件监听器，通过它调用我们 Vue 实例中定义的方法 -->
+	<div id="app-5">
+		<p>{{ message }}</p>
+		<button v-on:click="reverseMessage">逆转消息</button>
+		<button @click="reverseMessage">逆转消息(v-on缩写)</button>
+	</div>
+
+	<div id="app-6">
+		<p>{{ message }}</p>
+		<input v-model="message">
+	</div>
+
+	<div id="app-7">
+		<ol>
+			<todo-item
+      			v-for="item in groceryList"
+      			v-bind:todo="item"
+      			v-bind:key="item.id">
+    		</todo-item>	
+		</ol>
+
+		<ol>
+			<tlj-item></tlj-item>
+			<tlj-item></tlj-item>
+			<tlj-item></tlj-item>
+			<tlj-item></tlj-item>		
+		</ol>
+	</div>
+
+	
+
+	<div id="app-8">
+			<!-- 原始HTML -->
+		<p>Using mustaches: {{rawHtml}} </p>
+		<p>Using v-html directive:<span v-html="rawHtml"></span></p>
+	</div>
+
+
+	<script>
+		//声明式渲染
+		var app=new Vue({
+			el:'#app',
+			data:{
+				message:'Hello',
+				msg:'not change'
+			}
+		})
+
+		var app2=new Vue({
+			el:'#app-2',
+			data:{
+				message:'页面加载于'+new Date().toLocaleString(),
+				msg:'how are you',
+				url:'http://www.baidu.com'
+			}
+		})
+
+		var	app3=new Vue({
+			el:'#app-3',
+			data:{
+				seen:true
+			}
+		})
+
+		var app4=new Vue({
+			el:'#app-4',
+			data:{
+				todos:[
+					{text:'学习js'},
+					{text:'学习nodejs'},
+					{text:'学习java'}
+				]
+			}
+		})
+
+		var app5=new Vue({
+			el:'#app-5',
+			data:{
+				message:'hello vuejs!'
+			},
+			methods:{
+				reverseMessage:function() {
+					this.message=this.message.split('').reverse().join('')
+				}
+			}
+		})
+
+		var app6=new Vue({
+			el:'#app-6',
+			data:{
+				message:'hello'
+			}
+		})
+
+		Vue.component('todo-item', {
+			props:['todo'],
+  			template: '<li>{{ todo.text }}</li>'
+		})
+
+		// Q:Vue组件模板页面显示不了？
+		//A:组建模板要在一个div中渲染才能在页面
+		Vue.component('tlj-item',{
+			template:'<li>i am tlj</li>'
+		})
+
+		var app7=new Vue({
+			el:'#app-7',
+			data:{
+				groceryList:[
+					{id:0,text:'vegetable'},
+					{id:1,text:'fruit'},
+					{id:2,text:'anything else'}
+				]
+			}
+		})
+
+		
+		var data={a: 1}
+
+		var vm=new Vue({
+			data:data,
+			//生命周期钩子函数，created函数，实例被创建后执行
+			created:function(){
+				console.log('a is: '+this.a)
+			}
+		})
+
+		var app8=new Vue({
+			el:'#app-8',
+			data:{
+				rawHtml:'<span style="color:red">this is red</span>'
+			}
+
+		})
+
+	</script>
+</body>
+</html>

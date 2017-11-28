@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>列表渲染v-for</title>
+	<script src="https://unpkg.com/vue"></script>	
+</head>
+<body>
+	<ul id="example-1">
+		<li v-for="item in items">
+			{{ item.message }}
+		</li>
+	</ul>
+
+	<ul id="example-2">
+		<li v-for="(item,index) in items">
+			{{ parentMessage }} - {{ index }} - {{ item.message }}
+		</li>
+	</ul>
+
+	<!-- 一个对象的v-for -->
+	<ul id="v-for-object">
+		<li v-for="(value,key,index) in object">
+			{{ index }}.{{ key }} : {{ value }}
+		</li>
+	</ul>
+
+	<div id="example-4">
+		<span v-for="n in 10">{{ n }} </span>
+	</div>
+
+	<!-- v-for on a template -->
+	<div>
+		<ul>
+			<template v-for="item in items">
+				<li>{{ item.msg }}</li>
+				<li class="divider"></li>
+			</template>
+		</ul>
+	</div>
+
+	<!-- v-for with v-if -->
+	<div id="example-5">
+		<li v-for="todo in todos" v-if="!todo.isComplete">
+  			{{ todo }}
+		</li>
+	</div>
+	
+
+	<script>
+	
+
+
+		var example1=new Vue({
+			el:'#example-1',
+			data:{
+				items:[
+					{message:'Foo'},
+					{message:'Bar'}
+				]
+			}
+		})
+
+		var example2=new Vue({
+			el:'#example-2',
+			data:{
+				parentMessage:'Parent',
+				items:[
+					{message:'Foo'},
+					{message:'Bar'}
+				]
+			}
+		})
+
+		var ex3=new Vue({
+			el:'#v-for-object',
+			data:{
+				object:{
+					firstName:'John',
+					lastName:'Snow',
+					age:30
+				}
+			}
+		})
+
+		var vm=new Vue({
+			data:{
+				userProfile:{
+					name:'Anika'
+				}
+			}
+		})
+
+		var vm1=new Vue({
+			el:'#example-4'
+		})
+
+		var example5=new Vue({
+			el:'#example-5',
+			data:{
+				todos:[
+					{name:'todo1',isComplete:true},
+					{name:'todo2',isComplete:false},
+					{name:'todo3',isComplete:true},	
+					{name:'todo4',isComplete:false},	
+						
+				]
+			}
+		})
+	</script>
+
+</body>
+</html>
